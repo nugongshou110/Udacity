@@ -1,10 +1,4 @@
-import webbrowser
-import os
-import re
 
-
-# Styles and scripting for the page
-main_page_head = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,11 +76,7 @@ main_page_head = '''
         });
     </script>
 </head>
-'''
 
-
-# The main page layout and title bar
-main_page_content = '''
   <body>
     <!-- Trailer Video Modal -->
     <div class="modal" id="trailer">
@@ -111,47 +101,37 @@ main_page_content = '''
       </div>
     </div>
     <div class="container">
-      {movie_tiles}
+      
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youku-id="XMzM4NjU5NDIzNg" data-toggle="modal" data-target="#trailer">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518104390692&di=7753e1d458108d19c2c4a8aa48e870eb&imgtype=0&src=http%3A%2F%2Fwww.hhyl.cc%2Fuploads%2Fhuoche35%2F1489741283415716.jpg" width="220" height="342">
+    <h2>碟中谍6</h2>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youku-id="XMzM4NTgwNjg0MA" data-toggle="modal" data-target="#trailer">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518104547076&di=622fb1848c686f243fa7e89da7859293&imgtype=0&src=http%3A%2F%2Fimages.rednet.cn%2Farticleimage%2F2018%2F01%2F30%2F92949392.jpeg" width="220" height="342">
+    <h2>红海行动</h2>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youku-id="XMzM4NjE0MDY0NA" data-toggle="modal" data-target="#trailer">
+    <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2383667866,3207392615&fm=11&gp=0.jpg" width="220" height="342">
+    <h2>捉妖记2</h2>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youku-id="XMzM4NTc4NDc2OA" data-toggle="modal" data-target="#trailer">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518104688842&di=0c2f1c021bf8dc705770142e5aa46f50&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fjiangsu%2Fpics%2Fhv1%2F214%2F153%2F2261%2F147060754.jpg" width="220" height="342">
+    <h2>西游记女儿国</h2>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youku-id="XMzM4NjYwODEwMA" data-toggle="modal" data-target="#trailer">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518104894096&di=32f370d7bed084ede7bbf7d78639325f&imgtype=0&src=http%3A%2F%2Fwww.cnr.cn%2Fent%2Fjd%2F20180205%2FW020180205393992126187.jpg" width="220" height="342">
+    <h2>古墓丽影：源起之战</h2>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youku-id="XMzM4NzMzMDk5Ng" data-toggle="modal" data-target="#trailer">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518699499&di=b326e1b42ccffec4d87adf2264edf277&imgtype=jpg&er=1&src=http%3A%2F%2Fi.ce.cn%2Fce%2Fculture%2Fzt%2F2018%2Fcj%2Fhsddy%2F201801%2F26%2FW020180206366324285862.jpg" width="220" height="342">
+    <h2>2018春节电影盛宴</h2>
+</div>
+
     </div>
   </body>
 </html>
-'''
-
-
-# A single movie entry html template
-movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youku-id="{trailer_youku_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
-    <h2>{movie_title}</h2>
-</div>
-'''
-
-
-def create_movie_tiles_content(movies):
-    # The HTML content for this section of the page
-    content = ''
-    for movie in movies:
-        # Append the tile for the movie with its content filled in
-        content += movie_tile_content.format(
-            movie_title=movie.title,
-            poster_image_url=movie.poster_image_url,
-            trailer_youku_id=movie.trailer_youku_id
-        )
-    return content
-
-
-def open_movies_page(movies):
-    # Create or overwrite the output file
-    output_file = open('fresh_tomatoes.html', 'w')
-
-    # Replace the movie tiles placeholder generated content
-    rendered_content = main_page_content.format(
-        movie_tiles=create_movie_tiles_content(movies))
-
-    # Output the file
-    output_file.write(main_page_head + rendered_content)
-    output_file.close()
-    open_movies_page
-    # open the output file in the browser (in a new tab, if possible)
-    url = os.path.abspath(output_file.name)
-    webbrowser.open('file://' + url, new=2)
