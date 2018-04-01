@@ -1,5 +1,6 @@
 # coding=utf-8
 import math
+import decimal
 
 
 class Vector(object):
@@ -110,3 +111,30 @@ class Vector(object):
     # 计算两个向量是否正交
     def orthogonality(self, other, tolerance=1e-10):
         return abs(self.dot_product(other)) < tolerance
+
+    # 计算投影
+    def component_parallel_to(self, basis):
+        u = basis.normalized()
+        weight = self.dot_product(u)
+        return u.scalar_multiply(weight)
+
+    # 计算正交向量
+    def component_orthogonal_to(self, basis):
+        projection = self.component_parallel_to(basis)
+        return self.minus2(projection)
+
+    # 计算向量积
+    def cross_product(self, other):
+        x = self.coordinates[1] * other.coordinates[2] - self.coordinates[2] * other.coordinates[1]
+        y = self.coordinates[0] * other.coordinates[2] - self.coordinates[2] * other.coordinates[0]
+        z = self.coordinates[0] * other.coordinates[1] - self.coordinates[1] * other.coordinates[0]
+        new_coordinates = [x, -y, z]
+        return Vector(new_coordinates)
+
+    # 计算平行四边形面积
+    def area_of_pavallelogram(self, other):
+        return (self.cross_product(other)).magnitude()
+
+    # 计算三角形面积
+    def area_of_trangle(self, other):
+        return self.area_of_pavallelogram(other) / 2.0
